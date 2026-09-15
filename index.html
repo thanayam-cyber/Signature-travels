@@ -2,11 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>Luxury Tailor-Made Escapes | Signature Hospitality Sri Lanka</title>
     <meta name="description" content="Curated luxury Sri Lanka tours, boutique private villas, helicopter transfers, and 24/7 butler concierge by Signature Hospitality.">
     
     <!-- Google Fonts & Font Awesome -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -22,7 +24,7 @@
             --whatsapp-green: #25d366;
             --font-heading: 'Cinzel', serif;
             --font-body: 'Plus Jakarta Sans', sans-serif;
-            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            --transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         * {
@@ -30,43 +32,44 @@
             padding: 0;
             box-sizing: border-box;
             scroll-behavior: smooth;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
             background-color: var(--bg-dark);
             color: var(--text-light);
             font-family: var(--font-body);
-            line-height: 1.7;
+            line-height: 1.6;
             overflow-x: hidden;
         }
 
         h1, h2, h3, h4 {
             font-family: var(--font-heading);
-            letter-spacing: 1.5px;
+            letter-spacing: 1.2px;
         }
 
-        /* --- Floating WhatsApp --- */
+        /* --- Floating WhatsApp Concierge (Mobile Optimized) --- */
         .whatsapp-float {
             position: fixed;
-            bottom: 30px;
-            right: 30px;
+            bottom: calc(20px + env(safe-area-inset-bottom));
+            right: 20px;
             background-color: var(--whatsapp-green);
             color: #FFF;
             border-radius: 50px;
-            width: 60px;
-            height: 60px;
+            width: 56px;
+            height: 56px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 30px;
-            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.3);
+            font-size: 28px;
+            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.35);
             z-index: 1000;
             transition: var(--transition);
             text-decoration: none;
         }
 
-        .whatsapp-float:hover {
-            transform: scale(1.1);
+        .whatsapp-float:active {
+            transform: scale(0.92);
         }
 
         /* --- Navigation --- */
@@ -75,10 +78,11 @@
             top: 0;
             width: 100%;
             z-index: 999;
-            background: rgba(7, 8, 10, 0.85);
+            background: rgba(7, 8, 10, 0.92);
             backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
             border-bottom: 1px solid rgba(212, 175, 55, 0.15);
-            padding: 1.2rem 6%;
+            padding: 1rem 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -86,86 +90,137 @@
 
         .brand-logo {
             font-family: var(--font-heading);
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 700;
             color: var(--gold-primary);
-            letter-spacing: 2px;
+            letter-spacing: 1.5px;
             text-transform: uppercase;
+            text-decoration: none;
         }
 
         .brand-logo span {
-            font-size: 0.65rem;
+            font-size: 0.6rem;
             display: block;
             color: var(--text-muted);
-            letter-spacing: 4px;
+            letter-spacing: 3px;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--gold-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        /* --- Mobile Nav Overlay --- */
+        .mobile-nav-menu {
+            position: fixed;
+            top: 0; right: -100%;
+            width: 80%;
+            max-width: 320px;
+            height: 100vh;
+            background: var(--card-bg);
+            border-left: 1px solid var(--card-border);
+            z-index: 1001;
+            padding: 5rem 2rem 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            transition: var(--transition);
+        }
+
+        .mobile-nav-menu.active {
+            right: 0;
+        }
+
+        .mobile-nav-menu a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding-bottom: 0.8rem;
+        }
+
+        .close-mobile-menu {
+            position: absolute;
+            top: 1.5rem; right: 1.5rem;
+            color: var(--gold-primary);
+            font-size: 1.8rem;
+            background: none;
+            border: none;
+        }
+
+        .nav-backdrop {
+            display: none;
+            position: fixed;
+            top:0; left:0; width:100%; height:100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
+        }
+
+        .nav-backdrop.active {
+            display: block;
         }
 
         /* --- Buttons --- */
-        .btn-gold {
-            background: linear-gradient(135deg, #d4af37 0%, #aa7c11 100%);
-            color: #000;
-            padding: 0.85rem 2rem;
+        .btn-gold, .btn-outline {
+            min-height: 48px; /* Touch friendly height */
+            padding: 0.85rem 1.8rem;
             font-weight: 600;
             font-size: 0.8rem;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            border: none;
+            letter-spacing: 1.5px;
             border-radius: 2px;
             cursor: pointer;
             transition: var(--transition);
             text-decoration: none;
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 10px;
+            text-align: center;
         }
 
-        .btn-gold:hover {
-            box-shadow: 0 0 25px rgba(212, 175, 55, 0.4);
-            transform: translateY(-2px);
+        .btn-gold {
+            background: linear-gradient(135deg, #d4af37 0%, #aa7c11 100%);
+            color: #000;
+            border: none;
         }
 
         .btn-outline {
             border: 1px solid var(--gold-primary);
             color: var(--gold-primary);
             background: transparent;
-            padding: 0.85rem 2rem;
-            font-weight: 600;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            cursor: pointer;
-            transition: var(--transition);
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
         }
 
-        .btn-outline:hover {
-            background: var(--gold-primary);
-            color: #000;
-        }
-
-        /* --- Hero Section with Video Background --- */
+        /* --- Hero Section --- */
         .hero {
             position: relative;
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 0 1rem;
+            padding: 7rem 5% 4rem;
             overflow: hidden;
         }
 
         .hero-video {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
+            top: 50%; left: 50%;
+            min-width: 100%; min-height: 100%;
+            width: auto; height: auto;
             z-index: -2;
             transform: translateX(-50%) translateY(-50%);
             object-fit: cover;
@@ -174,39 +229,40 @@
         .hero-overlay {
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: linear-gradient(180deg, rgba(7,8,10,0.5) 0%, rgba(7,8,10,0.95) 100%);
+            background: linear-gradient(180deg, rgba(7,8,10,0.6) 0%, rgba(7,8,10,0.95) 100%);
             z-index: -1;
         }
 
         .hero-content {
-            max-width: 950px;
+            max-width: 900px;
+            width: 100%;
         }
 
         .hero-tagline {
             color: var(--gold-primary);
             text-transform: uppercase;
-            font-size: 0.85rem;
-            letter-spacing: 4px;
+            font-size: clamp(0.7rem, 2.5vw, 0.85rem);
+            letter-spacing: 3px;
             margin-bottom: 1rem;
         }
 
         .hero h1 {
-            font-size: 3.8rem;
-            line-height: 1.2;
-            margin-bottom: 1.5rem;
+            font-size: clamp(2.1rem, 6vw, 3.8rem);
+            line-height: 1.25;
+            margin-bottom: 1.2rem;
             font-weight: 400;
         }
 
         .hero p {
             color: var(--text-muted);
-            font-size: 1.15rem;
-            max-width: 750px;
-            margin: 0 auto 2.5rem;
+            font-size: clamp(0.95rem, 3vw, 1.15rem);
+            max-width: 700px;
+            margin: 0 auto 2.2rem;
         }
 
         .hero-cta-group {
             display: flex;
-            gap: 1.5rem;
+            gap: 1rem;
             justify-content: center;
             flex-wrap: wrap;
         }
@@ -216,57 +272,57 @@
             background: var(--card-bg);
             border-top: 1px solid rgba(212, 175, 55, 0.15);
             border-bottom: 1px solid rgba(212, 175, 55, 0.15);
-            padding: 3rem 6%;
+            padding: 2.5rem 5%;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 1.8rem;
             text-align: center;
         }
 
         .trust-item i {
-            font-size: 2rem;
+            font-size: 1.8rem;
             color: var(--gold-primary);
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
         }
 
         .trust-item h4 {
             color: var(--text-light);
-            font-size: 0.95rem;
-            margin-bottom: 0.3rem;
+            font-size: 0.9rem;
+            margin-bottom: 0.2rem;
         }
 
         .trust-item p {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: var(--text-muted);
         }
 
-        /* --- Section Styling --- */
+        /* --- Sections --- */
         .section {
-            padding: 7rem 6%;
+            padding: 5rem 5%;
         }
 
         .section-header {
             text-align: center;
-            margin-bottom: 4rem;
+            margin-bottom: 3rem;
         }
 
         .section-header h2 {
-            font-size: 2.5rem;
-            color: var(--text-light);
-            margin-bottom: 1rem;
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            margin-bottom: 0.8rem;
         }
 
         .section-header p {
             color: var(--text-muted);
+            font-size: 0.95rem;
             max-width: 600px;
             margin: 0 auto;
         }
 
-        /* --- Packages Grid & Cards --- */
+        /* --- Cards & Grid --- */
         .collection-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-            gap: 2.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
         }
 
         .card {
@@ -274,65 +330,50 @@
             border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 4px;
             overflow: hidden;
-            transition: var(--transition);
             display: flex;
             flex-direction: column;
         }
 
-        .card:hover {
-            transform: translateY(-8px);
-            border-color: var(--gold-primary);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-
         .card-img-wrapper {
             position: relative;
-            height: 280px;
-            overflow: hidden;
+            height: 240px;
         }
 
         .card-img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: var(--transition);
-        }
-
-        .card:hover .card-img {
-            transform: scale(1.08);
         }
 
         .card-badge {
             position: absolute;
-            top: 15px;
-            right: 15px;
+            top: 12px; right: 12px;
             background: rgba(7, 8, 10, 0.85);
             border: 1px solid var(--gold-primary);
             color: var(--gold-primary);
-            padding: 0.3rem 0.8rem;
-            font-size: 0.75rem;
+            padding: 0.25rem 0.65rem;
+            font-size: 0.7rem;
             letter-spacing: 1px;
             text-transform: uppercase;
-            border-radius: 2px;
         }
 
         .card-body {
-            padding: 2rem;
+            padding: 1.5rem;
             display: flex;
             flex-direction: column;
             flex-grow: 1;
         }
 
         .card-body h3 {
-            font-size: 1.3rem;
-            margin-bottom: 0.8rem;
+            font-size: 1.2rem;
+            margin-bottom: 0.6rem;
             color: var(--gold-primary);
         }
 
         .card-body p {
             color: var(--text-muted);
-            font-size: 0.9rem;
-            margin-bottom: 1.5rem;
+            font-size: 0.88rem;
+            margin-bottom: 1.2rem;
             flex-grow: 1;
         }
 
@@ -340,167 +381,198 @@
             display: flex;
             justify-content: space-between;
             border-top: 1px solid rgba(255, 255, 255, 0.05);
-            padding-top: 1rem;
-            margin-bottom: 1.5rem;
-            font-size: 0.85rem;
+            padding-top: 0.8rem;
+            margin-bottom: 1.2rem;
+            font-size: 0.8rem;
             color: var(--text-muted);
         }
 
-        /* --- Modal Popup Style & Inner Gallery --- */
+        /* --- Mobile-Optimized Modals --- */
         .modal {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(0, 0, 0, 0.92);
             backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             z-index: 2000;
             justify-content: center;
-            align-items: center;
-            padding: 2rem;
+            align-items: flex-end; /* Sheet style on mobile */
+            padding: 0;
+        }
+
+        @media (min-width: 768px) {
+            .modal {
+                align-items: center;
+                padding: 2rem;
+            }
         }
 
         .modal-content {
             background: var(--card-bg);
             border: 1px solid var(--gold-primary);
-            padding: 2.5rem;
-            max-width: 850px;
+            padding: 2rem 1.5rem;
             width: 100%;
-            max-height: 88vh;
+            max-width: 850px;
+            max-height: 90vh;
             overflow-y: auto;
-            border-radius: 4px;
+            border-radius: 12px 12px 0 0;
             position: relative;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        @media (min-width: 768px) {
+            .modal-content {
+                border-radius: 4px;
+                padding: 2.5rem;
+            }
         }
 
         .close-modal {
-            position: absolute;
-            top: 20px; right: 25px;
+            position: sticky;
+            top: 0;
+            float: right;
             font-size: 1.8rem;
             color: var(--gold-primary);
             cursor: pointer;
-            transition: var(--transition);
+            background: rgba(18, 20, 24, 0.9);
+            width: 36px; height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            z-index: 10;
+            margin-top: -0.5rem;
         }
 
-        .close-modal:hover {
-            color: #fff;
-        }
-
-        /* Inner Modal Gallery Grid */
         .modal-gallery-title {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 1.5px;
             color: var(--gold-primary);
-            margin-bottom: 0.8rem;
+            margin-bottom: 0.6rem;
         }
 
         .modal-gallery {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            margin-bottom: 2rem;
+            gap: 8px;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (max-width: 600px) {
+            .modal-gallery {
+                grid-template-columns: 1fr;
+            }
+            .modal-gallery img {
+                height: 180px !important;
+            }
         }
 
         .modal-gallery img {
             width: 100%;
-            height: 150px;
+            height: 120px;
             object-fit: cover;
             border-radius: 3px;
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            transition: var(--transition);
+            border: 1px solid rgba(212, 175, 55, 0.2);
         }
 
-        .modal-gallery img:hover {
-            transform: scale(1.04);
-            border-color: var(--gold-primary);
-        }
-
-        /* Package Overview Box */
         .package-overview {
             background: rgba(255, 255, 255, 0.02);
             border-left: 3px solid var(--gold-primary);
-            padding: 1.2rem 1.5rem;
-            margin-bottom: 2rem;
-            font-size: 0.95rem;
-            color: var(--text-light);
-            border-radius: 0 4px 4px 0;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
         }
 
-        /* Highlight Pills */
         .highlights-group {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 2rem;
+            gap: 6px;
+            margin-bottom: 1.5rem;
         }
 
         .highlight-tag {
             background: rgba(212, 175, 55, 0.1);
             border: 1px solid var(--gold-primary);
             color: var(--gold-primary);
-            padding: 0.35rem 0.85rem;
-            font-size: 0.75rem;
+            padding: 0.3rem 0.65rem;
+            font-size: 0.7rem;
             border-radius: 2px;
-            letter-spacing: 0.5px;
         }
 
         .itinerary-step {
-            margin-bottom: 1.5rem;
-            padding-left: 1.5rem;
+            margin-bottom: 1.2rem;
+            padding-left: 1rem;
             border-left: 2px solid var(--gold-primary);
         }
 
         .itinerary-step h4 {
             color: var(--gold-primary);
-            font-size: 1.05rem;
-            margin-bottom: 0.3rem;
+            font-size: 0.98rem;
+            margin-bottom: 0.2rem;
         }
 
         .itinerary-step p {
             color: var(--text-muted);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
 
-        /* --- Luxury Form Section --- */
+        /* --- Form Section (iOS Zoom Fix) --- */
         .form-container {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
-            padding: 4rem;
+            padding: 2rem 1.2rem;
             border-radius: 4px;
-            max-width: 950px;
+            max-width: 900px;
             margin: 0 auto;
+        }
+
+        @media (min-width: 768px) {
+            .form-container {
+                padding: 3.5rem;
+            }
         }
 
         .form-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
-            margin-top: 2rem;
+            grid-template-columns: 1fr;
+            gap: 1.2rem;
+            margin-top: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .form-group.full {
+                grid-column: span 2;
+            }
         }
 
         .form-group {
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        .form-group.full {
-            grid-column: span 2;
+            gap: 0.4rem;
         }
 
         label {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             text-transform: uppercase;
             letter-spacing: 1px;
             color: var(--gold-primary);
         }
 
+        /* Font size set to 16px to stop iOS Safari Auto-Zoom */
         input, select, textarea {
             background: #07080a;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            padding: 0.9rem;
             color: var(--text-light);
             font-family: var(--font-body);
-            border-radius: 2px;
+            font-size: 16px !important; 
+            border-radius: 3px;
+            width: 100%;
         }
 
         input:focus, select:focus, textarea:focus {
@@ -511,37 +583,58 @@
         /* --- Footer --- */
         footer {
             border-top: 1px solid rgba(255,255,255,0.05);
-            padding: 3rem 6%;
+            padding: 2.5rem 5%;
             text-align: center;
             color: var(--text-muted);
-            font-size: 0.85rem;
+            font-size: 0.8rem;
         }
 
+        /* --- Responsive Styles --- */
         @media (max-width: 768px) {
-            .hero h1 { font-size: 2.3rem; }
-            .form-grid { grid-template-columns: 1fr; }
-            .form-group.full { grid-column: span 1; }
-            .form-container { padding: 2rem; }
-            .modal-content { padding: 1.5rem; }
-            .modal-gallery { grid-template-columns: 1fr; }
+            .desktop-btn { display: none; }
+            .menu-toggle { display: block; }
+            .hero-cta-group {
+                flex-direction: column;
+                width: 100%;
+            }
+            .hero-cta-group .btn-gold, 
+            .hero-cta-group .btn-outline {
+                width: 100%;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- Floating WhatsApp Concierge with +94 71 180 3373 -->
+    <!-- Floating WhatsApp Concierge (+94 71 180 3373) -->
     <a href="https://wa.me/94711803373?text=Hello%20Signature%20Hospitality!%20I%20am%20interested%20in%20a%20luxury%20custom%20tour." class="whatsapp-float" target="_blank" aria-label="WhatsApp Butler Concierge">
         <i class="fa-brands fa-whatsapp"></i>
     </a>
 
     <!-- Header Navigation -->
     <nav>
-        <div class="brand-logo">
+        <a href="#" class="brand-logo">
             Signature
             <span>Hospitality & Private Escapes</span>
+        </a>
+        <div class="nav-right">
+            <a href="#inquire" class="btn-gold desktop-btn"><i class="fa-solid fa-compass"></i> Plan Journey</a>
+            <button class="menu-toggle" onclick="toggleMobileMenu()" aria-label="Toggle Menu">
+                <i class="fa-solid fa-bars-staggered"></i>
+            </button>
         </div>
-        <a href="#inquire" class="btn-gold"><i class="fa-solid fa-compass"></i> Plan My Journey</a>
     </nav>
+
+    <!-- Mobile Navigation Drawer -->
+    <div class="nav-backdrop" id="navBackdrop" onclick="toggleMobileMenu()"></div>
+    <div class="mobile-nav-menu" id="mobileMenu">
+        <button class="close-mobile-menu" onclick="toggleMobileMenu()">&times;</button>
+        <a href="#collections" onclick="toggleMobileMenu()">Travel Collections</a>
+        <a href="#inquire" onclick="toggleMobileMenu()">Custom Builder</a>
+        <a href="https://wa.me/94711803373" target="_blank" style="color: var(--whatsapp-green);">
+            <i class="fa-brands fa-whatsapp"></i> WhatsApp Concierge
+        </a>
+    </div>
 
     <!-- Hero Section -->
     <section class="hero">
@@ -566,22 +659,22 @@
         <div class="trust-item">
             <i class="fa-solid fa-hotel"></i>
             <h4>Managed Hospitality</h4>
-            <p>Direct oversight by certified hotel management directors</p>
+            <p>Direct oversight by certified directors</p>
         </div>
         <div class="trust-item">
             <i class="fa-solid fa-plane-circle-check"></i>
             <h4>SLTDA Registered</h4>
-            <p>Fully certified local ground handler & luxury DMC</p>
+            <p>Certified local luxury DMC</p>
         </div>
         <div class="trust-item">
             <i class="fa-solid fa-helicopter"></i>
             <h4>VIP Transfers</h4>
-            <p>Private aviation, sea-planes & luxury SUVs</p>
+            <p>Aviation, sea-planes & luxury SUVs</p>
         </div>
         <div class="trust-item">
             <i class="fa-solid fa-user-shield"></i>
             <h4>24/7 Private Butler</h4>
-            <p>Dedicated executive handling every detail on the ground</p>
+            <p>Dedicated executive concierge</p>
         </div>
     </div>
 
@@ -597,7 +690,7 @@
             <!-- Package 1 Card Face -->
             <div class="card">
                 <div class="card-img-wrapper">
-                    <img src="https://images.unsplash.com/photo-1588668214407-6ea9a6d8c272?auto=format&fit=crop&w=800&q=80" alt="Misty Ceylon Tea Estates Nuwara Eliya" class="card-img">
+                    <img src="https://images.unsplash.com/photo-1588668214407-6ea9a6d8c272?auto=format&fit=crop&w=800&q=80" alt="Misty Ceylon Tea Estates Nuwara Eliya" class="card-img" loading="lazy">
                     <div class="card-badge">7 Days / 6 Nights</div>
                 </div>
                 <div class="card-body">
@@ -607,14 +700,14 @@
                         <span><i class="fa-solid fa-bed"></i> Tea Trails Bungalow</span>
                         <span><i class="fa-solid fa-helicopter"></i> Helicopter / SUV</span>
                     </div>
-                    <button class="btn-gold" style="width: 100%; justify-content: center;" onclick="openModal('modal-tea')">Explore Tour & Photo Gallery</button>
+                    <button class="btn-gold" style="width: 100%;" onclick="openModal('modal-tea')">Explore Tour & Gallery</button>
                 </div>
             </div>
 
             <!-- Package 2 Card Face -->
             <div class="card">
                 <div class="card-img-wrapper">
-                    <img src="https://images.unsplash.com/photo-1613977257363-707ba9348227?auto=format&fit=crop&w=800&q=80" alt="Luxury South Coast Oceanfront Villa Sri Lanka" class="card-img">
+                    <img src="https://images.unsplash.com/photo-1613977257363-707ba9348227?auto=format&fit=crop&w=800&q=80" alt="Luxury South Coast Oceanfront Villa Sri Lanka" class="card-img" loading="lazy">
                     <div class="card-badge">10 Days / 9 Nights</div>
                 </div>
                 <div class="card-body">
@@ -624,14 +717,14 @@
                         <span><i class="fa-solid fa-bed"></i> Cape Weligama / Villa</span>
                         <span><i class="fa-solid fa-anchor"></i> Private Yacht</span>
                     </div>
-                    <button class="btn-gold" style="width: 100%; justify-content: center;" onclick="openModal('modal-beach')">Explore Tour & Photo Gallery</button>
+                    <button class="btn-gold" style="width: 100%;" onclick="openModal('modal-beach')">Explore Tour & Gallery</button>
                 </div>
             </div>
 
             <!-- Package 3 Card Face -->
             <div class="card">
                 <div class="card-img-wrapper">
-                    <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=800&q=80" alt="Yala Luxury Glamping Dome & Safari" class="card-img">
+                    <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=800&q=80" alt="Yala Luxury Glamping Dome & Safari" class="card-img" loading="lazy">
                     <div class="card-badge">5 Days / 4 Nights</div>
                 </div>
                 <div class="card-body">
@@ -641,7 +734,7 @@
                         <span><i class="fa-solid fa-bed"></i> Wild Coast Lodge</span>
                         <span><i class="fa-solid fa-binoculars"></i> Private 4x4 Jeep</span>
                     </div>
-                    <button class="btn-gold" style="width: 100%; justify-content: center;" onclick="openModal('modal-safari')">Explore Tour & Photo Gallery</button>
+                    <button class="btn-gold" style="width: 100%;" onclick="openModal('modal-safari')">Explore Tour & Gallery</button>
                 </div>
             </div>
 
@@ -655,7 +748,7 @@
         <div class="modal-content">
             <span class="close-modal" onclick="closeModal('modal-tea')">&times;</span>
             <h2 style="color: var(--gold-primary); margin-bottom: 0.3rem;">Ceylon Tea Estates & High Altitude Wellness</h2>
-            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">7 Days / 6 Nights Private Heritage & Wellness Escape</p>
+            <p style="color: var(--text-muted); margin-bottom: 1.2rem;">7 Days / 6 Nights Private Heritage & Wellness Escape</p>
 
             <div class="modal-gallery-title"><i class="fa-solid fa-camera"></i> Tour Photo Gallery</div>
             <div class="modal-gallery">
@@ -665,37 +758,37 @@
             </div>
 
             <div class="package-overview">
-                <strong>Experience Overview:</strong> Experience the ultimate high-altitude luxury getaway amidst Sri Lanka's emerald tea mountains. Stay in historic 19th-century colonial tea master bungalows, enjoy personalized tea blending with world-renowned connoisseurs, fly in private helicopters over cloud forests, and indulge in organic mountain wellness spas.
+                <strong>Experience Overview:</strong> Experience high-altitude luxury amidst Sri Lanka's tea mountains. Stay in historic 19th-century colonial tea bungalows, enjoy personalized tea blending, and fly in private helicopters over cloud forests.
             </div>
 
             <div class="highlights-group">
                 <span class="highlight-tag"><i class="fa-solid fa-helicopter"></i> Helicopter Transfers</span>
-                <span class="highlight-tag"><i class="fa-solid fa-user"></i> Private Butler Concierge</span>
-                <span class="highlight-tag"><i class="fa-solid fa-mug-hot"></i> Master Tea Blender</span>
-                <span class="highlight-tag"><i class="fa-solid fa-spa"></i> Alpine Hydrotherapy Spa</span>
+                <span class="highlight-tag"><i class="fa-solid fa-user"></i> Private Butler</span>
+                <span class="highlight-tag"><i class="fa-solid fa-mug-hot"></i> Tea Blender</span>
+                <span class="highlight-tag"><i class="fa-solid fa-spa"></i> Hydrotherapy Spa</span>
             </div>
 
-            <h3 style="color: #fff; font-size: 1.2rem; margin-bottom: 1rem;">Day-by-Day Journey</h3>
+            <h3 style="color: #fff; font-size: 1.1rem; margin-bottom: 1rem;">Day-by-Day Journey</h3>
             
             <div class="itinerary-step">
-                <h4>Day 1 - 2: VIP Arrival & Helicopter Scenic Flight to Tea Country</h4>
-                <p>Fast-track arrival clearance at BIA Colombo. Board a private helicopter to Castlereagh Lake. Check-in to Ceylon Tea Trails restored colonial bungalow with dedicated butler service.</p>
+                <h4>Day 1 - 2: VIP Arrival & Helicopter Flight to Tea Country</h4>
+                <p>Fast-track arrival clearance at BIA. Board a private helicopter to Castlereagh Lake. Check-in to Ceylon Tea Trails with dedicated butler service.</p>
             </div>
             <div class="itinerary-step">
-                <h4>Day 3 - 4: Private Master Tea Blender & Horton Plains World's End Trek</h4>
-                <p>Spend the morning picking tea leaves with artisan tea pluckers followed by a private tea tasting with a Master Blender. Next day, enjoy a private guided trek across Horton Plains with high-tea picnic at World's End.</p>
+                <h4>Day 3 - 4: Master Tea Blender & Horton Plains Trek</h4>
+                <p>Pick tea leaves with artisan pluckers followed by tea tasting with a Master Blender. Next day, enjoy a private guided trek across Horton Plains.</p>
             </div>
             <div class="itinerary-step">
-                <h4>Day 5 - 6: Mountain Hydrotherapy Spa & Fine-Dining Tea Dinners</h4>
-                <p>Relaxation day with high-altitude organic spa therapies and hydro-baths. Evening features a 5-course tea-infused dinner prepared by an executive chef in the gardens.</p>
+                <h4>Day 5 - 6: Mountain Hydrotherapy Spa & Fine-Dining</h4>
+                <p>Relaxation day with high-altitude organic spa therapies. Evening features a 5-course tea-infused dinner prepared by an executive chef.</p>
             </div>
             <div class="itinerary-step">
-                <h4>Day 7: First-Class Scenic Train & Private Departure Transfer</h4>
-                <p>Private observation train compartment through Ella gap. Private helicopter return to Colombo for VIP departure flight connection.</p>
+                <h4>Day 7: Scenic Train & Private Departure Transfer</h4>
+                <p>Private observation train compartment through Ella. Helicopter return to Colombo for VIP departure flight connection.</p>
             </div>
 
             <br>
-            <a href="#inquire" class="btn-gold" onclick="closeModal('modal-tea')"><i class="fa-solid fa-file-signature"></i> Request Bespoke Proposal For This Route</a>
+            <a href="#inquire" class="btn-gold" style="width: 100%;" onclick="closeModal('modal-tea')"><i class="fa-solid fa-file-signature"></i> Request Proposal For Route</a>
         </div>
     </div>
 
@@ -704,7 +797,7 @@
         <div class="modal-content">
             <span class="close-modal" onclick="closeModal('modal-beach')">&times;</span>
             <h2 style="color: var(--gold-primary); margin-bottom: 0.3rem;">South Coast Yachting & Private Villa Escape</h2>
-            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">10 Days / 9 Nights Oceanfront Opulence</p>
+            <p style="color: var(--text-muted); margin-bottom: 1.2rem;">10 Days / 9 Nights Oceanfront Opulence</p>
 
             <div class="modal-gallery-title"><i class="fa-solid fa-camera"></i> Tour Photo Gallery</div>
             <div class="modal-gallery">
@@ -714,37 +807,37 @@
             </div>
 
             <div class="package-overview">
-                <strong>Experience Overview:</strong> Indulge in an ultra-exclusive coastal escape on Sri Lanka's vibrant southern shoreline. Stay in private cliffside estates with dedicated household staff, embark on private ocean catamarans for whale watching and secluded cove swimming, and savor seafood gastronomy curated by executive chefs.
+                <strong>Experience Overview:</strong> Indulge in an ultra-exclusive coastal escape. Stay in private cliffside estates with dedicated staff, embark on private ocean catamarans for whale watching, and savor seafood gastronomy.
             </div>
 
             <div class="highlights-group">
-                <span class="highlight-tag"><i class="fa-solid fa-house-chimney-window"></i> Full Villa Buyout</span>
-                <span class="highlight-tag"><i class="fa-solid fa-utensils"></i> Personal Executive Chef</span>
-                <span class="highlight-tag"><i class="fa-solid fa-anchor"></i> Private Yacht Charter</span>
-                <span class="highlight-tag"><i class="fa-solid fa-wine-glass"></i> Galle Fort Heritage Gin Tasting</span>
+                <span class="highlight-tag"><i class="fa-solid fa-house-chimney-window"></i> Villa Buyout</span>
+                <span class="highlight-tag"><i class="fa-solid fa-utensils"></i> Executive Chef</span>
+                <span class="highlight-tag"><i class="fa-solid fa-anchor"></i> Yacht Charter</span>
+                <span class="highlight-tag"><i class="fa-solid fa-wine-glass"></i> Galle Fort Gin Tasting</span>
             </div>
 
-            <h3 style="color: #fff; font-size: 1.2rem; margin-bottom: 1rem;">Day-by-Day Journey</h3>
+            <h3 style="color: #fff; font-size: 1.1rem; margin-bottom: 1rem;">Day-by-Day Journey</h3>
             
             <div class="itinerary-step">
-                <h4>Day 1 - 3: Luxury SUV Arrival to Weligama Cliffside Villa</h4>
-                <p>Private luxury SUV escort to a cliffside estate overlooking the Indian Ocean. Welcome seafood BBQ & infinity pool cocktail hour with private household team.</p>
+                <h4>Day 1 - 3: Luxury SUV Arrival to Weligama Villa</h4>
+                <p>Private luxury SUV escort to a cliffside estate overlooking the Indian Ocean. Welcome seafood BBQ & infinity pool cocktail hour.</p>
             </div>
             <div class="itinerary-step">
-                <h4>Day 4 - 6: Private Ocean Yacht Charter & Secret Cove Snorkeling</h4>
-                <p>Board a luxury private catamaran off Mirissa harbour. Private whale watching, jet-skiing, and gourmet seafood lunch prepared on board by your chef.</p>
+                <h4>Day 4 - 6: Private Ocean Yacht Charter & Snorkeling</h4>
+                <p>Board a luxury private catamaran. Private whale watching, jet-skiing, and gourmet seafood lunch prepared on board by your chef.</p>
             </div>
             <div class="itinerary-step">
-                <h4>Day 7 - 8: Historic Galle Fort Heritage Tour & Ramparts Sunset</h4>
-                <p>Private guided historical tour of UNESCO Galle Fort with a senior historian, ending with artisan gin cocktails on the ramparts at sunset.</p>
+                <h4>Day 7 - 8: Historic Galle Fort Heritage Tour</h4>
+                <p>Private guided historical tour of UNESCO Galle Fort with a senior historian, ending with artisan gin cocktails on the ramparts.</p>
             </div>
             <div class="itinerary-step">
-                <h4>Day 9 - 10: Ayurvedic Beachfront Wellness & Departure</h4>
+                <h4>Day 9 - 10: In-Villa Spa & Airport VIP Departure</h4>
                 <p>In-villa ocean breeze Ayurvedic spa massage, torch-lit beach dining, and direct executive transfer back to Colombo Airport VIP lounge.</p>
             </div>
 
             <br>
-            <a href="#inquire" class="btn-gold" onclick="closeModal('modal-beach')"><i class="fa-solid fa-file-signature"></i> Request Bespoke Proposal For This Route</a>
+            <a href="#inquire" class="btn-gold" style="width: 100%;" onclick="closeModal('modal-beach')"><i class="fa-solid fa-file-signature"></i> Request Proposal For Route</a>
         </div>
     </div>
 
@@ -753,7 +846,7 @@
         <div class="modal-content">
             <span class="close-modal" onclick="closeModal('modal-safari')">&times;</span>
             <h2 style="color: var(--gold-primary); margin-bottom: 0.3rem;">Wildlife Safaris & Eco-Luxury Glamping</h2>
-            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">5 Days / 4 Nights Tented Jungle Opulence</p>
+            <p style="color: var(--text-muted); margin-bottom: 1.2rem;">5 Days / 4 Nights Tented Jungle Opulence</p>
 
             <div class="modal-gallery-title"><i class="fa-solid fa-camera"></i> Tour Photo Gallery</div>
             <div class="modal-gallery">
@@ -763,37 +856,37 @@
             </div>
 
             <div class="package-overview">
-                <strong>Experience Overview:</strong> Step into Sri Lanka's untamed wilderness without compromising on world-class luxury. Nestled between Yala National Park and the Indian Ocean, experience luxury cocoon glamping, customized 4x4 leopard tracking safaris with expert naturalists, and atmospheric bush dinners under starry skies.
+                <strong>Experience Overview:</strong> Step into Sri Lanka's untamed wilderness. Nestled between Yala National Park and the Indian Ocean, experience luxury cocoon glamping and customized 4x4 leopard tracking safaris.
             </div>
 
             <div class="highlights-group">
                 <span class="highlight-tag"><i class="fa-solid fa-campground"></i> Wild Coast Luxury Tent</span>
-                <span class="highlight-tag"><i class="fa-solid fa-binoculars"></i> Master Naturalist Guide</span>
-                <span class="highlight-tag"><i class="fa-solid fa-paw"></i> Private 4x4 Leopard Safari</span>
-                <span class="highlight-tag"><i class="fa-solid fa-fire"></i> Sunset Bush BBQ & Champagne</span>
+                <span class="highlight-tag"><i class="fa-solid fa-binoculars"></i> Master Naturalist</span>
+                <span class="highlight-tag"><i class="fa-solid fa-paw"></i> Leopard Safari</span>
+                <span class="highlight-tag"><i class="fa-solid fa-fire"></i> Bush BBQ & Champagne</span>
             </div>
 
-            <h3 style="color: #fff; font-size: 1.2rem; margin-bottom: 1rem;">Day-by-Day Journey</h3>
+            <h3 style="color: #fff; font-size: 1.1rem; margin-bottom: 1rem;">Day-by-Day Journey</h3>
             
             <div class="itinerary-step">
                 <h4>Day 1: Seaplane Transfer & Jungle Cocoon Welcome</h4>
-                <p>Transfer via seaplane directly to Yala water-drome. Check-in at Wild Coast Tented Lodge. Sundowner champagne on the boulder coast.</p>
+                <p>Transfer via seaplane directly to Yala. Check-in at Wild Coast Tented Lodge. Sundowner champagne on the boulder coast.</p>
             </div>
             <div class="itinerary-step">
-                <h4>Day 2 - 3: Leopard & Sloth Bear Tracking with Head Naturalist</h4>
-                <p>Early morning VIP 4x4 game drives in private zones of Yala. Afternoon bush walk along park boundaries, followed by a private star-lit bush dinner.</p>
+                <h4>Day 2 - 3: Leopard Tracking with Head Naturalist</h4>
+                <p>Early morning VIP 4x4 game drives in private zones of Yala. Afternoon bush walk followed by a private star-lit bush dinner.</p>
             </div>
             <div class="itinerary-step">
-                <h4>Day 4: Udawalawe Elephant Sanctuary & Wilderness Spa</h4>
+                <h4>Day 4: Udawalawe Elephant Sanctuary & Spa</h4>
                 <p>Visit the Elephant Transit Home with private sanctuary access. Return to camp for evening outdoor copper-tub hydro-spa treatments.</p>
             </div>
             <div class="itinerary-step">
-                <h4>Day 5: Dawn Game Drive & Direct Helicopter Return</h4>
-                <p>Final sunrise game drive to spot wild leopards and peacocks. Private helicopter transfer directly to BIA airport for departure flight.</p>
+                <h4>Day 5: Dawn Safari & Helicopter Transfer</h4>
+                <p>Final sunrise game drive to spot wild leopards. Private helicopter transfer directly to BIA airport for departure flight.</p>
             </div>
 
             <br>
-            <a href="#inquire" class="btn-gold" onclick="closeModal('modal-safari')"><i class="fa-solid fa-file-signature"></i> Request Bespoke Proposal For This Route</a>
+            <a href="#inquire" class="btn-gold" style="width: 100%;" onclick="closeModal('modal-safari')"><i class="fa-solid fa-file-signature"></i> Request Proposal For Route</a>
         </div>
     </div>
 
@@ -805,7 +898,6 @@
         </div>
 
         <div class="form-container">
-            <!-- Replace YOUR_FORMSPREE_ID with your actual Formspree ID -->
             <form action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST" id="luxuryInquiryForm">
                 <div class="form-grid">
                     <div class="form-group">
@@ -818,7 +910,7 @@
                     </div>
                     <div class="form-group">
                         <label>Phone / WhatsApp Number</label>
-                        <input type="tel" name="phone" placeholder="+1 (555) 000-0000" required>
+                        <input type="tel" name="phone" placeholder="+94 71 180 3373" required>
                     </div>
                     <div class="form-group">
                         <label>Expected Travel Dates</label>
@@ -843,7 +935,7 @@
                     <div class="form-group full">
                         <label>Accommodation Preference</label>
                         <select name="accommodation">
-                            <option value="ultra-luxury">Ultra-Luxury Estates & 5-Star Resorts (Aman, Tea Trails, Wild Coast)</option>
+                            <option value="ultra-luxury">Ultra-Luxury Estates & 5-Star Resorts (Aman, Tea Trails)</option>
                             <option value="private-villas">Exclusive Buyout Private Villas with Dedicated Staff</option>
                             <option value="boutique-heritage">Boutique Heritage Bungalows & Eco-Luxe Glamping</option>
                         </select>
@@ -853,13 +945,13 @@
                         <textarea name="message" rows="4" placeholder="Mention helicopter transfers, dietary preferences, private yacht charters, or specific experiences desired..."></textarea>
                     </div>
                 </div>
-                <div style="text-align: center; margin-top: 2.5rem; display: flex; flex-direction: column; align-items: center; gap: 1rem;">
-                    <button type="submit" class="btn-gold" style="width: 100%; max-width: 400px; justify-content: center;">
+                <div style="text-align: center; margin-top: 2rem; display: flex; flex-direction: column; align-items: center; gap: 1rem;">
+                    <button type="submit" class="btn-gold" style="width: 100%; max-width: 400px;">
                         <i class="fa-solid fa-paper-plane"></i> Request Bespoke Proposal
                     </button>
                     <!-- Direct WhatsApp Option -->
-                    <a href="https://wa.me/94711803373?text=Hi!%20I%20want%20to%20plan%20a%20luxury%20trip%20with%20Signature%20Hospitality." target="_blank" class="btn-outline" style="border-color: #25d366; color: #25d366; max-width: 400px; width: 100%; justify-content: center;">
-                        <i class="fa-brands fa-whatsapp"></i> Chat directly on WhatsApp (+94 71 180 3373)
+                    <a href="https://wa.me/94711803373?text=Hi!%20I%20want%20to%20plan%20a%20luxury%20trip%20with%20Signature%20Hospitality." target="_blank" class="btn-outline" style="border-color: #25d366; color: #25d366; max-width: 400px; width: 100%;">
+                        <i class="fa-brands fa-whatsapp"></i> Chat on WhatsApp (+94 71 180 3373)
                     </a>
                 </div>
             </form>
@@ -868,20 +960,32 @@
 
     <!-- Footer -->
     <footer>
-        <p>&copy; 2026 Signature Hospitality Sri Lanka. All Rights Reserved. Managed Hospitality & Private Travel Escapes.</p>
+        <p>&copy; 2026 Signature Hospitality Sri Lanka. All Rights Reserved.</p>
     </footer>
 
     <!-- JavaScript -->
     <script>
+        // Mobile Drawer Toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const backdrop = document.getElementById('navBackdrop');
+            menu.classList.toggle('active');
+            backdrop.classList.toggle('active');
+        }
+
+        // Modal Functionality
         function openModal(id) {
             document.getElementById(id).style.display = 'flex';
+            document.body.style.overflow = 'hidden'; // Stop background scrolling
         }
         function closeModal(id) {
             document.getElementById(id).style.display = 'none';
+            document.body.style.overflow = 'auto';
         }
         window.onclick = function(event) {
             if (event.target.classList.contains('modal')) {
                 event.target.style.display = "none";
+                document.body.style.overflow = 'auto';
             }
         }
 
