@@ -211,10 +211,11 @@
             flex-wrap: wrap;
         }
 
-        /* --- Trust & License Banner --- */
+        /* --- Trust Banner --- */
         .trust-banner {
             background: var(--card-bg);
-            border-y: 1px solid rgba(212, 175, 55, 0.15);
+            border-top: 1px solid rgba(212, 175, 55, 0.15);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
             padding: 3rem 6%;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -286,7 +287,7 @@
 
         .card-img-wrapper {
             position: relative;
-            height: 260px;
+            height: 280px;
             overflow: hidden;
         }
 
@@ -312,6 +313,7 @@
             font-size: 0.75rem;
             letter-spacing: 1px;
             text-transform: uppercase;
+            border-radius: 2px;
         }
 
         .card-body {
@@ -344,13 +346,13 @@
             color: var(--text-muted);
         }
 
-        /* --- Modal Popup for Itineraries --- */
+        /* --- Modal Popup Style & Inner Gallery --- */
         .modal {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(8px);
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
             z-index: 2000;
             justify-content: center;
             align-items: center;
@@ -360,9 +362,10 @@
         .modal-content {
             background: var(--card-bg);
             border: 1px solid var(--gold-primary);
-            padding: 3rem;
-            max-width: 800px;
-            max-height: 85vh;
+            padding: 2.5rem;
+            max-width: 850px;
+            width: 100%;
+            max-height: 88vh;
             overflow-y: auto;
             border-radius: 4px;
             position: relative;
@@ -374,6 +377,70 @@
             font-size: 1.8rem;
             color: var(--gold-primary);
             cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .close-modal:hover {
+            color: #fff;
+        }
+
+        /* Inner Modal Gallery Grid */
+        .modal-gallery-title {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--gold-primary);
+            margin-bottom: 0.8rem;
+        }
+
+        .modal-gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 2rem;
+        }
+
+        .modal-gallery img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 3px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            transition: var(--transition);
+        }
+
+        .modal-gallery img:hover {
+            transform: scale(1.04);
+            border-color: var(--gold-primary);
+        }
+
+        /* Package Overview Box */
+        .package-overview {
+            background: rgba(255, 255, 255, 0.02);
+            border-left: 3px solid var(--gold-primary);
+            padding: 1.2rem 1.5rem;
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+            color: var(--text-light);
+            border-radius: 0 4px 4px 0;
+        }
+
+        /* Highlight Pills */
+        .highlights-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 2rem;
+        }
+
+        .highlight-tag {
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid var(--gold-primary);
+            color: var(--gold-primary);
+            padding: 0.35rem 0.85rem;
+            font-size: 0.75rem;
+            border-radius: 2px;
+            letter-spacing: 0.5px;
         }
 
         .itinerary-step {
@@ -384,7 +451,13 @@
 
         .itinerary-step h4 {
             color: var(--gold-primary);
-            font-size: 1.1rem;
+            font-size: 1.05rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .itinerary-step p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
         }
 
         /* --- Luxury Form Section --- */
@@ -435,22 +508,6 @@
             border-color: var(--gold-primary);
         }
 
-        /* --- Guarantee Seals --- */
-        .seals-row {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 3rem;
-            margin-top: 3rem;
-            opacity: 0.7;
-            flex-wrap: wrap;
-        }
-
-        .seals-row img {
-            height: 40px;
-            filter: grayscale(100%) brightness(200%);
-        }
-
         /* --- Footer --- */
         footer {
             border-top: 1px solid rgba(255,255,255,0.05);
@@ -466,6 +523,7 @@
             .form-group.full { grid-column: span 1; }
             .form-container { padding: 2rem; }
             .modal-content { padding: 1.5rem; }
+            .modal-gallery { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -485,7 +543,7 @@
         <a href="#inquire" class="btn-gold"><i class="fa-solid fa-compass"></i> Plan My Journey</a>
     </nav>
 
-    <!-- Hero Section (With Background Video) -->
+    <!-- Hero Section -->
     <section class="hero">
         <video autoplay loop muted playsinline class="hero-video">
             <source src="https://assets.mixkit.co/videos/preview/mixkit-aerial-view-of-a-beach-with-clear-water-41547-large.mp4" type="video/mp4">
@@ -535,27 +593,28 @@
         </div>
 
         <div class="collection-grid">
-            <!-- Collection Item 1 -->
+            
+            <!-- Package 1 Card Face -->
             <div class="card">
                 <div class="card-img-wrapper">
-                    <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=600&q=80" alt="Ceylon Tea Trails" class="card-img">
+                    <img src="https://images.unsplash.com/photo-1588668214407-6ea9a6d8c272?auto=format&fit=crop&w=800&q=80" alt="Misty Ceylon Tea Estates Nuwara Eliya" class="card-img">
                     <div class="card-badge">7 Days / 6 Nights</div>
                 </div>
                 <div class="card-body">
                     <h3>Ceylon Tea Estates & High Altitude Wellness</h3>
-                    <p>Relish high-country colonial bungalows, private helicopter transfers over Nuwara Eliya, and personalized tea blending sessions.</p>
+                    <p>Relish high-country colonial tea bungalows, private helicopter transfers over Nuwara Eliya, and personalized tea blending sessions.</p>
                     <div class="card-meta">
-                        <span><i class="fa-solid fa-bed"></i> Ceylon Tea Trails</span>
-                        <span><i class="fa-solid fa-car"></i> Luxury SUV / Chopper</span>
+                        <span><i class="fa-solid fa-bed"></i> Tea Trails Bungalow</span>
+                        <span><i class="fa-solid fa-helicopter"></i> Helicopter / SUV</span>
                     </div>
-                    <button class="btn-gold" style="width: 100%; justify-content: center;" onclick="openModal('modal-tea')">View Day-By-Day Itinerary</button>
+                    <button class="btn-gold" style="width: 100%; justify-content: center;" onclick="openModal('modal-tea')">Explore Tour & Photo Gallery</button>
                 </div>
             </div>
 
-            <!-- Collection Item 2 -->
+            <!-- Package 2 Card Face -->
             <div class="card">
                 <div class="card-img-wrapper">
-                    <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80" alt="Private Beach Villa" class="card-img">
+                    <img src="https://images.unsplash.com/photo-1613977257363-707ba9348227?auto=format&fit=crop&w=800&q=80" alt="Luxury South Coast Oceanfront Villa Sri Lanka" class="card-img">
                     <div class="card-badge">10 Days / 9 Nights</div>
                 </div>
                 <div class="card-body">
@@ -565,14 +624,14 @@
                         <span><i class="fa-solid fa-bed"></i> Cape Weligama / Villa</span>
                         <span><i class="fa-solid fa-anchor"></i> Private Yacht</span>
                     </div>
-                    <button class="btn-gold" style="width: 100%; justify-content: center;" onclick="openModal('modal-beach')">View Day-By-Day Itinerary</button>
+                    <button class="btn-gold" style="width: 100%; justify-content: center;" onclick="openModal('modal-beach')">Explore Tour & Photo Gallery</button>
                 </div>
             </div>
 
-            <!-- Collection Item 3 -->
+            <!-- Package 3 Card Face -->
             <div class="card">
                 <div class="card-img-wrapper">
-                    <img src="https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=600&q=80" alt="Yala Safari Glamping" class="card-img">
+                    <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=800&q=80" alt="Yala Luxury Glamping Dome & Safari" class="card-img">
                     <div class="card-badge">5 Days / 4 Nights</div>
                 </div>
                 <div class="card-body">
@@ -580,35 +639,173 @@
                     <p>Immerse in Yala National Park with VIP tented lodges, private naturalist guides, and sunset champagne safaris.</p>
                     <div class="card-meta">
                         <span><i class="fa-solid fa-bed"></i> Wild Coast Lodge</span>
-                        <span><i class="fa-solid fa-binoculars"></i> Private Jeep</span>
+                        <span><i class="fa-solid fa-binoculars"></i> Private 4x4 Jeep</span>
                     </div>
-                    <button class="btn-gold" style="width: 100%; justify-content: center;" onclick="openModal('modal-safari')">View Day-By-Day Itinerary</button>
+                    <button class="btn-gold" style="width: 100%; justify-content: center;" onclick="openModal('modal-safari')">Explore Tour & Photo Gallery</button>
                 </div>
             </div>
+
         </div>
     </section>
 
-    <!-- Itinerary Modals -->
+    <!-- Detailed Modals with Photo Gallery & Full Specifications -->
+
+    <!-- Modal 1: Ceylon Tea Estates -->
     <div class="modal" id="modal-tea">
         <div class="modal-content">
             <span class="close-modal" onclick="closeModal('modal-tea')">&times;</span>
-            <h2 style="color: var(--gold-primary); margin-bottom: 0.5rem;">Ceylon Tea Estates Itinerary</h2>
-            <p style="color: var(--text-muted); margin-bottom: 2rem;">7 Days Private Heritage Escapes</p>
+            <h2 style="color: var(--gold-primary); margin-bottom: 0.3rem;">Ceylon Tea Estates & High Altitude Wellness</h2>
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">7 Days / 6 Nights Private Heritage & Wellness Escape</p>
+
+            <!-- Gallery Title & Grid -->
+            <div class="modal-gallery-title"><i class="fa-solid fa-camera"></i> Tour Photo Gallery</div>
+            <div class="modal-gallery">
+                <img src="https://images.unsplash.com/photo-1588668214407-6ea9a6d8c272?auto=format&fit=crop&w=600&q=80" alt="Tea Estate Highlands">
+                <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=600&q=80" alt="Luxury Colonial Bungalow Stay">
+                <img src="https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=600&q=80" alt="Ceylon Master Tea Tasting">
+            </div>
+
+            <!-- Overview Paragraph -->
+            <div class="package-overview">
+                <strong>Experience Overview:</strong> Experience the ultimate high-altitude luxury getaway amidst Sri Lanka's emerald tea mountains. Stay in historic 19th-century colonial tea master bungalows, enjoy personalized tea blending with world-renowned connoisseurs, fly in private helicopters over cloud forests, and indulge in organic mountain wellness spas.
+            </div>
+
+            <!-- Highlight Pills -->
+            <div class="highlights-group">
+                <span class="highlight-tag"><i class="fa-solid fa-helicopter"></i> Helicopter Transfers</span>
+                <span class="highlight-tag"><i class="fa-solid fa-user"></i> Private Butler Concierge</span>
+                <span class="highlight-tag"><i class="fa-solid fa-mug-hot"></i> Master Tea Blender</span>
+                <span class="highlight-tag"><i class="fa-solid fa-spa"></i> Alpine Hydrotherapy Spa</span>
+            </div>
+
+            <!-- Detailed Day-by-Day Itinerary -->
+            <h3 style="color: #fff; font-size: 1.2rem; margin-bottom: 1rem;">Day-by-Day Journey</h3>
             
             <div class="itinerary-step">
-                <h4>Day 1 - 2: Arrival & Helicopter Transfer to Central Highlands</h4>
-                <p>VIP fast-track arrival at Colombo Airport. Seaplane transfer to Castlereagh Lake. Check-in at Ceylon Tea Trails Bungalow with personal butler service.</p>
+                <h4>Day 1 - 2: VIP Arrival & Helicopter Scenic Flight to Tea Country</h4>
+                <p>Fast-track arrival clearance at BIA Colombo. Board a private helicopter to Castlereagh Lake. Check-in to Ceylon Tea Trails restored colonial bungalow with dedicated butler service.</p>
             </div>
             <div class="itinerary-step">
-                <h4>Day 3 - 4: Private Master Blender Experience & Horton Plains</h4>
-                <p>Private access to tea plantations with a Master Blender. Private guided trek across Horton Plains & World's End with high-tea picnic.</p>
+                <h4>Day 3 - 4: Private Master Tea Blender & Horton Plains World's End Trek</h4>
+                <p>Spend the morning picking tea leaves with artisan tea pluckers followed by a private tea tasting with a Master Blender. Next day, enjoy a private guided trek across Horton Plains with high-tea picnic at World's End.</p>
             </div>
             <div class="itinerary-step">
-                <h4>Day 5 - 7: Scenic Train Compartment & Departure</h4>
-                <p>First-class private observation compartment ride down to Ella. Private helicopter transfer to Colombo for departure.</p>
+                <h4>Day 5 - 6: Mountain Hydrotherapy Spa & Fine-Dining Tea Dinners</h4>
+                <p>Relaxation day with high-altitude organic spa therapies and hydro-baths. Evening features a 5-course tea-infused dinner prepared by an executive chef in the gardens.</p>
             </div>
+            <div class="itinerary-step">
+                <h4>Day 7: First-Class Scenic Train & Private Departure Transfer</h4>
+                <p>Private observation train compartment through Ella gap. Private helicopter return to Colombo for VIP departure flight connection.</p>
+            </div>
+
             <br>
-            <a href="#inquire" class="btn-gold" onclick="closeModal('modal-tea')">Request Custom Quote For This Route</a>
+            <a href="#inquire" class="btn-gold" onclick="closeModal('modal-tea')"><i class="fa-solid fa-file-signature"></i> Request Bespoke Proposal For This Route</a>
+        </div>
+    </div>
+
+    <!-- Modal 2: South Coast Villa & Yachting -->
+    <div class="modal" id="modal-beach">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('modal-beach')">&times;</span>
+            <h2 style="color: var(--gold-primary); margin-bottom: 0.3rem;">South Coast Yachting & Private Villa Escape</h2>
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">10 Days / 9 Nights Oceanfront Opulence</p>
+
+            <!-- Gallery Title & Grid -->
+            <div class="modal-gallery-title"><i class="fa-solid fa-camera"></i> Tour Photo Gallery</div>
+            <div class="modal-gallery">
+                <img src="https://images.unsplash.com/photo-1613977257363-707ba9348227?auto=format&fit=crop&w=600&q=80" alt="Private Oceanfront Villa">
+                <img src="https://images.unsplash.com/photo-1569263979104-865ab7cd8d13?auto=format&fit=crop&w=600&q=80" alt="Private Luxury Yacht Cruise">
+                <img src="https://images.unsplash.com/photo-1515238152791-8216bfdf89a7?auto=format&fit=crop&w=600&q=80" alt="Beachside Fine Dining Setup">
+            </div>
+
+            <!-- Overview Paragraph -->
+            <div class="package-overview">
+                <strong>Experience Overview:</strong> Indulge in an ultra-exclusive coastal escape on Sri Lanka's vibrant southern shoreline. Stay in private cliffside estates with dedicated household staff, embark on private ocean catamarans for whale watching and secluded cove swimming, and savor seafood gastronomy curated by executive chefs.
+            </div>
+
+            <!-- Highlight Pills -->
+            <div class="highlights-group">
+                <span class="highlight-tag"><i class="fa-solid fa-house-chimney-window"></i> Full Villa Buyout</span>
+                <span class="highlight-tag"><i class="fa-solid fa-utensils"></i> Personal Executive Chef</span>
+                <span class="highlight-tag"><i class="fa-solid fa-anchor"></i> Private Yacht Charter</span>
+                <span class="highlight-tag"><i class="fa-solid fa-wine-glass"></i> Galle Fort Heritage Gin Tasting</span>
+            </div>
+
+            <!-- Detailed Day-by-Day Itinerary -->
+            <h3 style="color: #fff; font-size: 1.2rem; margin-bottom: 1rem;">Day-by-Day Journey</h3>
+            
+            <div class="itinerary-step">
+                <h4>Day 1 - 3: Luxury SUV Arrival to Weligama Cliffside Villa</h4>
+                <p>Private luxury SUV escort to a cliffside estate overlooking the Indian Ocean. Welcome seafood BBQ & infinity pool cocktail hour with private household team.</p>
+            </div>
+            <div class="itinerary-step">
+                <h4>Day 4 - 6: Private Ocean Yacht Charter & Secret Cove Snorkeling</h4>
+                <p>Board a luxury private catamaran off Mirissa harbour. Private whale watching, jet-skiing, and gourmet seafood lunch prepared on board by your chef.</p>
+            </div>
+            <div class="itinerary-step">
+                <h4>Day 7 - 8: Historic Galle Fort Heritage Tour & Ramparts Sunset</h4>
+                <p>Private guided historical tour of UNESCO Galle Fort with a senior historian, ending with artisan gin cocktails on the ramparts at sunset.</p>
+            </div>
+            <div class="itinerary-step">
+                <h4>Day 9 - 10: Ayurvedic Beachfront Wellness & Departure</h4>
+                <p>In-villa ocean breeze Ayurvedic spa massage, torch-lit beach dining, and direct executive transfer back to Colombo Airport VIP lounge.</p>
+            </div>
+
+            <br>
+            <a href="#inquire" class="btn-gold" onclick="closeModal('modal-beach')"><i class="fa-solid fa-file-signature"></i> Request Bespoke Proposal For This Route</a>
+        </div>
+    </div>
+
+    <!-- Modal 3: Wildlife Safaris & Eco-Glamping -->
+    <div class="modal" id="modal-safari">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('modal-safari')">&times;</span>
+            <h2 style="color: var(--gold-primary); margin-bottom: 0.3rem;">Wildlife Safaris & Eco-Luxury Glamping</h2>
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">5 Days / 4 Nights Tented Jungle Opulence</p>
+
+            <!-- Gallery Title & Grid -->
+            <div class="modal-gallery-title"><i class="fa-solid fa-camera"></i> Tour Photo Gallery</div>
+            <div class="modal-gallery">
+                <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=600&q=80" alt="Jungle Glamping Dome">
+                <img src="https://images.unsplash.com/photo-1534567153574-2b12153a87f0?auto=format&fit=crop&w=600&q=80" alt="Yala Leopard Tracking Safari">
+                <img src="https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&w=600&q=80" alt="Luxury Safari Tent Interior">
+            </div>
+
+            <!-- Overview Paragraph -->
+            <div class="package-overview">
+                <strong>Experience Overview:</strong> Step into Sri Lanka's untamed wilderness without compromising on world-class luxury. Nestled between Yala National Park and the Indian Ocean, experience luxury cocoon glamping, customized 4x4 leopard tracking safaris with expert naturalists, and atmospheric bush dinners under starry skies.
+            </div>
+
+            <!-- Highlight Pills -->
+            <div class="highlights-group">
+                <span class="highlight-tag"><i class="fa-solid fa-campground"></i> Wild Coast Luxury Tent</span>
+                <span class="highlight-tag"><i class="fa-solid fa-binoculars"></i> Master Naturalist Guide</span>
+                <span class="highlight-tag"><i class="fa-solid fa-paw"></i> Private 4x4 Leopard Safari</span>
+                <span class="highlight-tag"><i class="fa-solid fa-fire"></i> Sunset Bush BBQ & Champagne</span>
+            </div>
+
+            <!-- Detailed Day-by-Day Itinerary -->
+            <h3 style="color: #fff; font-size: 1.2rem; margin-bottom: 1rem;">Day-by-Day Journey</h3>
+            
+            <div class="itinerary-step">
+                <h4>Day 1: Seaplane Transfer & Jungle Cocoon Welcome</h4>
+                <p>Transfer via seaplane directly to Yala water-drome. Check-in at Wild Coast Tented Lodge. Sundowner champagne on the boulder coast.</p>
+            </div>
+            <div class="itinerary-step">
+                <h4>Day 2 - 3: Leopard & Sloth Bear Tracking with Head Naturalist</h4>
+                <p>Early morning VIP 4x4 game drives in private zones of Yala. Afternoon bush walk along park boundaries, followed by a private star-lit bush dinner.</p>
+            </div>
+            <div class="itinerary-step">
+                <h4>Day 4: Udawalawe Elephant Sanctuary & Wilderness Spa</h4>
+                <p>Visit the Elephant Transit Home with private sanctuary access. Return to camp for evening outdoor copper-tub hydro-spa treatments.</p>
+            </div>
+            <div class="itinerary-step">
+                <h4>Day 5: Dawn Game Drive & Direct Helicopter Return</h4>
+                <p>Final sunrise game drive to spot wild leopards and peacocks. Private helicopter transfer directly to BIA airport for departure flight.</p>
+            </div>
+
+            <br>
+            <a href="#inquire" class="btn-gold" onclick="closeModal('modal-safari')"><i class="fa-solid fa-file-signature"></i> Request Bespoke Proposal For This Route</a>
         </div>
     </div>
 
@@ -620,7 +817,6 @@
         </div>
 
         <div class="form-container">
-            <!-- Formspree Integration Ready -->
             <form action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST">
                 <div class="form-grid">
                     <div class="form-group">
@@ -633,54 +829,56 @@
                     </div>
                     <div class="form-group">
                         <label>Phone / WhatsApp Number</label>
-                        <input type="tel" name="phone" placeholder="+44 7000 000000" required>
+                        <input type="tel" name="phone" placeholder="+94 71 180 3373" required>
                     </div>
                     <div class="form-group">
-                        <label>Estimated Travel Dates</label>
-                        <input type="text" name="travel_dates" placeholder="e.g., Nov 10 - Nov 24, 2026">
+                        <label>Expected Travel Dates</label>
+                        <input type="date" name="travel_date">
                     </div>
                     <div class="form-group">
-                        <label>Per-Person Target Budget (USD)</label>
-                        <select name="budget">
-                            <option>$3,000 - $5,000 / person</option>
-                            <option>$5,000 - $10,000 / person</option>
-                            <option>$10,000+ / person (Ultra VIP)</option>
+                        <label>Number of Guests</label>
+                        <select name="guests">
+                            <option value="1-2">Solo / Couple (1-2 Guests)</option>
+                            <option value="3-5">Small Family / Group (3-5 Guests)</option>
+                            <option value="6+">Private Party / VIP Group (6+ Guests)</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Preferred Experience Type</label>
-                        <select name="style">
-                            <option>Tea Country & Wellness Retreat</option>
-                            <option>Private Coastal Villas & Yachting</option>
-                            <option>Wildlife Glamping & Helicopter Tours</option>
-                            <option>Full Sri Lanka Master Discovery</option>
+                        <label>Preferred Travel Duration</label>
+                        <select name="duration">
+                            <option value="5-7">5 - 7 Days</option>
+                            <option value="8-12">8 - 12 Days</option>
+                            <option value="14+">14+ Days (Grand Tour)</option>
                         </select>
                     </div>
                     <div class="form-group full">
-                        <label>Special Requests / Preferences</label>
-                        <textarea name="message" rows="4" placeholder="Mention preferred villa brands, dietary requirements, private jet charters..."></textarea>
+                        <label>Accommodation Preference</label>
+                        <select name="accommodation">
+                            <option value="ultra-luxury">Ultra-Luxury Estates & 5-Star Resorts (Aman, Tea Trails, Wild Coast)</option>
+                            <option value="private-villas">Exclusive Buyout Private Villas with Dedicated Staff</option>
+                            <option value="boutique-heritage">Boutique Heritage Bungalows & Eco-Luxe Glamping</option>
+                        </select>
+                    </div>
+                    <div class="form-group full">
+                        <label>Special Requests & Travel Preferences</label>
+                        <textarea name="message" rows="4" placeholder="Mention helicopter transfers, dietary preferences, private yacht charters, or specific experiences desired..."></textarea>
                     </div>
                 </div>
-
                 <div style="text-align: center; margin-top: 2.5rem;">
-                    <button type="submit" class="btn-gold" style="padding: 1rem 3rem;"><i class="fa-regular fa-paper-plane"></i> Request Custom Itinerary & Proposal</button>
+                    <button type="submit" class="btn-gold" style="width: 100%; max-width: 400px; justify-content: center;">
+                        <i class="fa-solid fa-paper-plane"></i> Request Bespoke Proposal
+                    </button>
                 </div>
             </form>
-
-            <!-- Verification Seals -->
-            <div class="seals-row">
-                <span style="color: var(--gold-primary); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px;"><i class="fa-solid fa-lock"></i> 100% Confidential & Secure Travel Concierge</span>
-            </div>
         </div>
     </section>
 
     <!-- Footer -->
     <footer>
-        <p>&copy; 2026 <strong>Signature Hospitality Sri Lanka</strong>. All Rights Reserved. Bespoke Travel Division.</p>
-        <p style="margin-top: 0.5rem; font-size: 0.75rem; color: #475569;">Registered Office: Colombo, Sri Lanka | SLTDA Approved DMC</p>
+        <p>&copy; 2026 Signature Hospitality Sri Lanka. All Rights Reserved. Managed Hospitality & Private Travel Escapes.</p>
     </footer>
 
-    <!-- Interactive JS Scripts -->
+    <!-- JavaScript for Modals -->
     <script>
         function openModal(id) {
             document.getElementById(id).style.display = 'flex';
@@ -688,10 +886,9 @@
         function closeModal(id) {
             document.getElementById(id).style.display = 'none';
         }
-        // Close modal when clicking outside
         window.onclick = function(event) {
             if (event.target.classList.contains('modal')) {
-                event.target.style.display = 'none';
+                event.target.style.display = "none";
             }
         }
     </script>
